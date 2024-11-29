@@ -14,7 +14,7 @@ class Adventurer:
         Inventory(dict): Contains the avatars inventory. The inventory is set up as 
           dictionary where the keys indicate the item types. Each item of that
           type is stored in a list. For example, if a player has two health potions it's 
-          represented as "heal potion": [10, 5]
+          represented as {"heal potion": [10, 5]}
     """
     def __init__(self, name: str) -> None:
         """Creates an instance of an adventurer to explore the dungeon.
@@ -96,7 +96,7 @@ class Adventurer:
         if object_type not in self.inventory.keys() or len(self.inventory[object_type]) == 0:
             print(f"No {object_type} is in inventory.")
         elif object_value not in self.inventory[object_type]:
-            print(f"No {object_type} with {object_type} is in inventory.")
+            print(f"No {object_type} with {object_value} is in inventory.")
         else: 
             self.inventory[object_type].remove(object_value)
 

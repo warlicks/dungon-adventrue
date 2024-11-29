@@ -80,10 +80,11 @@ def test_no_wand_inventory(dungeon_explorer, capsys):
 def test_wrong_health_potion(dungeon_explorer, capsys):
     """Test that the function handles when an item type is present, but an item of that
     value isn't present."""
+    dungeon_explorer.add_to_inventory("health potion", 10)
     dungeon_explorer.remove_from_inventory("health potion", 100)
     capture = capsys.readouterr()
 
-    capture.out == "No health potion with 100 is in inventory.\n"
+    assert capture.out == "No health potion with 100 is in inventory.\n"
 
 
 def test_remove_proper_sword(dungeon_explorer):
