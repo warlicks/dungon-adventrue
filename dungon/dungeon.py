@@ -73,7 +73,7 @@ class Dungeon:
                 previous_room.doors["East"] = new_room
                 new_room.doors["North"] = previous_room
             else:
-                previous_room.doors["Sourth"] = new_room
+                previous_room.doors["South"] = new_room
                 new_room.doors["West"] = previous_room
 
         # Location 2: New room NE of pervious room
@@ -89,7 +89,7 @@ class Dungeon:
         elif previous_room.x > new_room.x and previous_room.y < new_room.y:
             if path == "H":
                 previous_room.doors["West"] = new_room
-                new_room.doors["South"] = new_room
+                new_room.doors["South"] = previous_room
             else:
                 previous_room.doors["North"] = new_room
                 new_room.doors["East"] = previous_room
