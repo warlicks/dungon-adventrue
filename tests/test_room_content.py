@@ -57,3 +57,21 @@ def test_general_content_creation():
 
     assert "vision potion" in room.content.keys()
     assert room.content["vision potion"] == True
+
+
+def test_bad_probability():
+    room = Room(0, 0)
+    with pytest.raises(ValueError):
+        room.generate_room_content("sword", 100, probability=2)
+
+
+def test_bad_probability1():
+    room = Room(0, 0)
+    with pytest.raises(ValueError):
+        room.generate_pit(probability=2)
+
+
+def test_bad_probability2():
+    room = Room(0, 0)
+    with pytest.raises(ValueError):
+        room.generate_healing_potion(probability=-0.5)
