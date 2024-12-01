@@ -69,39 +69,28 @@ class Dungeon:
 
         # Location 1: New room is SE of previous room.
         if previous_room.x < new_room.x and previous_room.y > new_room.y:
-            if path == "H":
-                previous_room.doors["East"] = new_room
-                new_room.doors["North"] = previous_room
-            else:
-                previous_room.doors["South"] = new_room
-                new_room.doors["West"] = previous_room
+            self._assign_doors(
+                path, previous_room, new_room, "East", "North", "South", "West"
+            )
 
         # Location 2: New room NE of pervious room
         elif previous_room.x < new_room.x and previous_room.y < new_room.y:
-            if path == "H":
-                previous_room.doors["East"] = new_room
-                new_room.doors["South"] = previous_room
-            else:
-                previous_room.doors["North"] = new_room
-                new_room.doors["West"] = previous_room
+            self._assign_doors(
+                path, previous_room, new_room, "East", "South", "North", "West"
+            )
 
         # Location 3: New Room NW of previous room
         elif previous_room.x > new_room.x and previous_room.y < new_room.y:
-            if path == "H":
-                previous_room.doors["West"] = new_room
-                new_room.doors["South"] = previous_room
-            else:
-                previous_room.doors["North"] = new_room
-                new_room.doors["East"] = previous_room
+            self._assign_doors(
+                path, previous_room, new_room, "West", "South", "North", "East"
+            )
 
         # Location 4: New Room SW of previous room
         elif previous_room.x > new_room.x and previous_room.y > new_room.y:
-            if path == "H":
-                previous_room.doors["West"] = new_room
-                new_room.doors["North"] = previous_room
-            else:
-                previous_room.doors["South"] = new_room
-                new_room.doors["East"] = previous_room
+            self._assign_doors(
+                path, previous_room, new_room, "West", "North", "South", "East"
+            )
+
         # Location 5: New Room N of previous room
         elif previous_room.x == new_room.x and previous_room.y < new_room.y:
             previous_room.doors["North"] = new_room
@@ -147,3 +136,30 @@ class Dungeon:
         for obj in objectives:
             for r in object_rooms:
                 r.generate_room_content("game_objective", obj, 1.0)
+
+    def _assign_doors(
+        self,
+        path: str,
+        previous_room: Room,
+        new_room: Room,
+        previous_horizontal_door: str,
+        new_horizontal_door: str,
+        previous_vertical_door: str,
+        new_vertical_door: str,
+    ):
+        # TODO: Add A check that the door strings are valid. Should be North, East, South, West.
+        if path == "H":
+            # Check to make sure the door isn't in use already. If in use go other path.
+            if previous_room.doors[previous_horizontal_door] is False:
+                previous_room.doors[previous_horizontal_door] = new_room
+                new_room.doors[new_horizontal_door] = previous_room
+            else:
+                previous_room.doors[previous_vertical_door] = new_room
+                new_room.doors[new_vertical_door] = previous_room
+        else:
+            if previous_room.doors[previous_vertical_door] is False:
+                previous_room.doors[previous_vertical_door] = new_room
+                new_room.doors[new_vertical_door] = previous_room
+            else:
+                previous_room.doors[previous_horizontal_door] = new_room
+                new_room.doors[new_horizontal_door] = previous_room

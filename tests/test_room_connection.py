@@ -112,3 +112,49 @@ def test_new_room_sw():
     assert ((room1.doors["West"] == room2) and (room2.doors["North"] == room1)) or (
         (room1.doors["South"] == room2) and room2.doors["East"] == room1
     )
+
+
+def test_connection_with_existing_connection():
+    """Test that when the door from the previous room is occupied,
+    the other connection path is used.
+
+    When developing the test I forced a connection. It may not be a connection that could
+    actually happen but it does prove the function works correctly.
+    """
+    room0 = Room(1, 3)
+    room1 = Room(3, 4)
+    room2 = Room(4, 5)
+
+    room1.doors["North"] = room0
+
+    d = Dungeon()
+
+    d._assign_doors("H", room1, room2, "North", "East", "West", "South")
+
+    assert room1.doors["North"] == room0
+    assert room1.doors["West"] == room2
+    assert room2.doors["South"] == room1
+
+
+def test_connection_with_existing_connection2():
+    """Test that when the door from the previous room is occupied,
+    the other connection path is used.
+
+    When developing the test I forced a connection. It may not be a connection that could
+    actually happen but it does prove the function works correctly.
+
+    This test cases focuses on the vertical path
+    """
+    room0 = Room(1, 3)
+    room1 = Room(3, 4)
+    room2 = Room(4, 5)
+
+    room1.doors["West"] = room0
+
+    d = Dungeon()
+
+    d._assign_doors("V", room1, room2, "North", "East", "West", "South")
+
+    assert room1.doors["West"] == room0
+    assert room1.doors["North"] == room2
+    assert room2.doors["East"] == room1
