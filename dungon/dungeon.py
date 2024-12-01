@@ -1,4 +1,5 @@
 import random
+from typing import List
 from .room import Room
 
 
@@ -19,15 +20,30 @@ class Dungeon:
             )
 
             if num_rooms == 0:
-                # If it's the first room we don't need to do anything.
-                pass
+                # Assign the first room created as the entrance
+                new_room.generate_room_content("entrance", True, 1.0)
+                continue
             else:
                 # Make connection to previous room
                 previous_room = self.rooms[num_rooms - 1]
                 self._connect_rooms(new_room, previous_room)
 
+            # Do room content creation.
+            # If it is the last room assign an exit and nothing else.
+            if num_rooms == (self._max_rooms - 1):
+                new_room.generate_room_content("exit", True, 1.0)
+            else:
+                new_room.generate_pit()
+                new_room.generate_healing_potion()
+                new_room.generate_room_content("vision potion", True)
+
             self.rooms.append(new_room)
             num_rooms += 1
+        # Do Pillar Placement
+        # TODO: Make this more modular. Objectives should be a argument somewhere.
+        self._place_game_objectives(
+            ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+        )
 
     def _connect_rooms(self, new_room: Room, previous_room: Room):
         """Connects the newly created to the previous room.
@@ -114,3 +130,20 @@ class Dungeon:
             return "H"
         else:
             return "V"
+
+    # TODO: Should this be internal or external? Should this live here or in dungeon_adventure?
+    # This should be modular enough to pick it up and move it with minimal changes.
+    def _place_game_objectives(self, objectives: List[str]) -> None:
+
+        num_objectives = len(objectives)
+
+        # We do -2 because we can't place things in the entrance or exit rooms.
+        if num_objectives > len(self.rooms) - 2:
+            raise ValueError(
+                "You can't place all of your objectives. There aren't enough eligible rooms"
+            )
+
+        object_rooms = random.sample(self.rooms[1:-1], k=num_objectives)
+        for obj in objectives:
+            for r in object_rooms:
+                r.generate_room_content("game_objective", obj, 1.0)
