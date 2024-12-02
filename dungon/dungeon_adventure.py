@@ -20,7 +20,7 @@ class DungeonAdventure:
         print(self.dungeon)
 
         # TODO: Randomly pick a room to start in.
-        self.current_room = random.sample(self.dungeon.rooms, k=1)
+        self.current_room = random.sample(self.dungeon.rooms, k=1)[0]
 
     def chose_action(self):
         input_options = f"""What would you like to do now, {self.adventurer.name}?
