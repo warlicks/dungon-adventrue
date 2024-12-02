@@ -22,20 +22,20 @@ class Dungeon:
             if num_rooms == 0:
                 # Assign the first room created as the entrance
                 new_room.generate_room_content("entrance", True, 1.0)
-                continue
+
             else:
                 # Make connection to previous room
                 previous_room = self.rooms[num_rooms - 1]
                 self._connect_rooms(new_room, previous_room)
 
-            # Do room content creation.
-            # If it is the last room assign an exit and nothing else.
-            if num_rooms == (self._max_rooms - 1):
-                new_room.generate_room_content("exit", True, 1.0)
-            else:
-                new_room.generate_pit()
-                new_room.generate_healing_potion()
-                new_room.generate_room_content("vision potion", True)
+                # Do room content creation.
+                # If it is the last room assign an exit and nothing else.
+                if num_rooms == (self._max_rooms - 1):
+                    new_room.generate_room_content("exit", True, 1.0)
+                else:
+                    new_room.generate_pit()
+                    new_room.generate_healing_potion()
+                    new_room.generate_room_content("vision potion", True)
 
             self.rooms.append(new_room)
             num_rooms += 1
@@ -44,6 +44,7 @@ class Dungeon:
         self._place_game_objectives(
             ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
         )
+        self.maze_status()
 
     def _connect_rooms(self, new_room: Room, previous_room: Room):
         """Connects the newly created to the previous room.
@@ -64,7 +65,7 @@ class Dungeon:
               based on the relative location and the "tunnel path" between the rooms.
         """
 
-        # decide if the "tunnle" will go vertical or horizontal first.
+        # decide if the "tunnel" will go vertical or horizontal first.
         path = self._decide_connection_path()
 
         # Location 1: New room is SE of previous room.
@@ -163,3 +164,22 @@ class Dungeon:
             else:
                 previous_room.doors[previous_horizontal_door] = new_room
                 new_room.doors[new_horizontal_door] = previous_room
+
+    def maze_status(self):
+
+        self.object_counts = {}
+
+        # Find all the items in the maze
+        for r in self.rooms:
+            for key in r.content.keys():
+                if key in self.object_counts.keys():
+                    self.object_counts[key] += 1
+                else:
+                    self.object_counts[key] = 1
+
+    def __str__(self):
+        content_list = [f"{k}: {v}" for k, v in self.object_counts.items()]
+        content_str = "\n\t".join(content_list)
+        msg = f"The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.\n\nHidden in the maze, you can find:\n\t{content_str}."
+
+        return msg
