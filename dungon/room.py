@@ -3,8 +3,35 @@ from typing import Any
 
 
 class Room:
+    """Rooms in the Dungeon
+
+    The Room class is intended to assist with the generation of the maze and to
+    keep track of the room content during game play. he class does is not intended to
+    handle any of the game playing logic. When a new room is created it is empty and the
+    room is not connected to any other room in the maze.
+
+    Attributes:
+        x (int): The horizontal location of the room in the maze.
+        y (int): The vertical location of the room in the maze.
+        doors (dict): A dictionary indicating which of the four doors are connected
+          to another room. If there is no room in a particular direction the value is False.
+          If there is a room, the value is the Room instance.
+        content (dict): The content in the room. The keys are the type of object in the
+          room and value represents the value of the object. Only one of any object type
+          can exist in a room.
+    """
 
     def __init__(self, x: int, y: int) -> None:
+        """Creates a new empty room.
+
+        The Room class is intended to assist with the generation of the maze and to
+        keep track of the room content during game play. When a new room is created it
+        is empty and the room is not connected to any other room in the maze.
+
+        Args:
+            x (int): The horizontal location of the room in the maze.
+            y (int): The vertical location of the room in the maze.
+        """
         self.x = x
         self.y = y
         self.doors = {"North": False, "East": False, "South": False, "West": False}
