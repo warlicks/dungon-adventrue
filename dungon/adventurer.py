@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Union
 import random
 
 
@@ -17,7 +17,7 @@ class Adventurer:
           represented as {"heal potion": [10, 5]}
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: Union[str, None]) -> None:
         """Creates an instance of an adventurer to explore the dungeon.
 
         Args:
@@ -122,7 +122,7 @@ class Adventurer:
         # TODO: Use the suggestion in Google's style guide to make this pretty.
         joined_message = "\n\t".join(full_inventory)
         status_msg = f"""
-        {self.name} has {self.health_score} health points. 
+        {self.name} has {self.health_score} health points.
         {self.name} has the following items in inventory:
         {joined_message}
         """
