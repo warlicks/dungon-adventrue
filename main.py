@@ -2,11 +2,15 @@ from dungon.dungeon_adventure import DungeonAdventure
 
 
 def main():
-    d = DungeonAdventure()
+    d = DungeonAdventure(
+        max_rooms=6,
+        map_height=5,
+        map_width=5,
+    )
 
     d.start_game()
 
-    for i in range(4):
+    for i in range(50):
         action = d.chose_action()
 
         if action == 1:
