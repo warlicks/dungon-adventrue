@@ -4,8 +4,8 @@ from .dungeon import Dungeon
 
 
 class DungeonAdventure:
-    def __init__(self) -> None:
-        self.dungeon = Dungeon()
+    def __init__(self, **kwargs) -> None:
+        self.dungeon = Dungeon(**kwargs)
         self.adventurer = Adventurer(None)
         self.current_room = None
 
@@ -17,13 +17,17 @@ class DungeonAdventure:
         self.adventurer.name = player_name
 
         self.dungeon.generate_dungeon()
+        self.current_room = random.sample(self.dungeon.rooms, k=1)[0]
+
         print(f"Welcome to the Dungeon {self.adventurer.name}.\n")
         print("As you start your exploration your status is:\n")
         print(self.adventurer, "\n")
         print(self.dungeon)
         print("\n")
-
-        self.current_room = random.sample(self.dungeon.rooms, k=1)[0]
+        print(
+            f"You are starting in a room at {self.current_room.x}, {self.current_room.y}"
+        )
+        self.check_room_content()
 
     def chose_action(self):
         input_options = f"""What would you like to do now, {self.adventurer.name}?
@@ -49,7 +53,9 @@ class DungeonAdventure:
         move_direction = move_keys[user_move_choice]
         if self.current_room.doors[move_direction] is not False:
             self.current_room = self.current_room.doors[move_direction]
-            print("\\nYou have entered a new room.")
+            print(
+                f"\\nYou have entered a new room located @ {self.current_room.x, self.current_room.y}"
+            )
             return True
         else:
             print(f"\\nThere is no room to the {move_keys[user_move_choice]}")
