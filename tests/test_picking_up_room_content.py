@@ -98,3 +98,21 @@ def test_multiple_items_in_room():
     assert d.adventurer.inventory["vision potion"][0]
     assert d.adventurer.inventory["pillar"][0] == "Inheritance"
     assert len(d.current_room.content.keys()) == 0
+
+
+def test_falling_in_pit(capsys):
+    """That multiple items in the room are picked up and added to inventory."""
+    d = DungeonAdventure()
+    room0 = Room(2, 2)
+    room0.content["pit"] = 20
+    d.dungeon.rooms.append(room0)
+    d.current_room = d.dungeon.rooms[0]
+
+    starting_health = d.adventurer.health_score
+
+    d.check_room_content()
+    capture = capsys.readouterr()
+    assert capture.out.startswith("You fell in a pit!")
+    assert d.adventurer.health_score == (starting_health - 20)
+    # We don't remove the pit from the room. They can keep falling in it!
+    assert "pit" in d.current_room.content.keys()
