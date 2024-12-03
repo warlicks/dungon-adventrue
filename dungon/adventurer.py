@@ -31,9 +31,13 @@ class Adventurer:
         self.inventory = {"health potion": [], "vision potion": [], "pillar": []}
 
     @property
-    def name(self) -> str:
+    def name(self) -> Union[str, None]:
         """The name of the players avatar"""
         return self._name
+
+    @name.setter
+    def name(self, value: Union[str, None]):
+        self._name = value
 
     @property
     def health_score(self) -> int:
