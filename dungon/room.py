@@ -100,5 +100,5 @@ class Room:
             raise ValueError(
                 "Probability must be a floating point value between 0.0 and 1.0"
             )
-        if random.binomialvariate(n=1, p=probability):
+        if random.uniform(0, 1.0) >= (1 - probability):
             self.content[object_type] = object_value
