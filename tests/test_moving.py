@@ -39,7 +39,7 @@ def test_unsuccessful_move(dungeon, monkeypatch, capsys):
     # The print capture catches the print from when we capture user input and the
     # response when we can't navigate to the north. Therefore we use the endswith() to
     # just check the end of the print statement.
-    assert capture.out.endswith("\nThere is no room to the North\n")
+    assert capture.out.endswith("\\nThere is no room to the North\n")
 
 
 @pytest.fixture
