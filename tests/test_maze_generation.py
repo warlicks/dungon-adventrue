@@ -47,6 +47,19 @@ def test_that_game_objectives_placed(dungeon):
     assert dungeon.object_counts["game_objective"] == 4
 
 
+def test_four_unique_objectives(dungeon):
+    pillars = []
+    for r in dungeon.rooms:
+        if "game_objective" in r.content.keys():
+            pillars.append(r.content["game_objective"])
+
+    a = [
+        x in pillars
+        for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+    ]
+    assert all(a)
+
+
 # Here down we test basic navigation by making sure rooms are connected as expected.
 def test_navigation_room0_to_room1(dungeon):
 
