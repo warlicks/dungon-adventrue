@@ -167,9 +167,8 @@ class Dungeon:
             )
 
         object_rooms = random.sample(self.rooms[1:-1], k=num_objectives)
-        for obj in objectives:
-            for r in object_rooms:
-                r.generate_room_content("game_objective", obj, 1.0)
+        for index, obj in enumerate(objectives):
+            object_rooms[index].generate_room_content("game_objective", obj, 1.0)
 
     def _assign_doors(
         self,
