@@ -102,3 +102,34 @@ class Room:
             )
         if random.uniform(0, 1.0) >= (1 - probability):
             self.content[object_type] = object_value
+
+    def __str__(self):
+        """Creates 2D string representation of the room."""
+        middle = self._room_content_string()
+        room_str = "*-*\n" + middle + "*-*"
+        return room_str
+
+    def _room_content_string(self) -> str:
+        """Parses room content to generate string representation of the room.
+
+        Returns:
+            str: A string representing what is in the room.
+        """
+        if len(self.content.keys()) == 0:
+            middle = "| |\n"
+        elif "entrance" in self.content.keys():
+            middle = "|i|\n"
+        elif "exit" in self.content.keys():
+            middle = "|O|\n"
+        elif len(self.content.keys()) > 1:
+            middle = "|M|\n"
+        elif "pit" in self.content.keys():
+            middle = "|X|\n"
+        elif "health potion" in self.content.keys():
+            middle = "|H|\n"
+        elif "vision potion" in self.content.keys():
+            middle = "|V|\n"
+        elif "game_objective" in self.content.keys():
+            middle = f"|{self.content['game_objective'][0]}|"
+
+        return middle
