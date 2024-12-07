@@ -267,3 +267,41 @@ class Dungeon:
         )
 
         return msg
+
+    def print_dungeon_map(self):
+        """Prints a map of the dungeon to the terminal
+
+        The map of the dungeon is implemented as a list of lists. Each list
+        is a representation of row of the dungeon. Within a given row, each item
+        in the list represents a column in the dungeon. If a space in the dungeon
+        is empty(there isn't a room there), it is represented by an empty string.
+        if a room is present at the given coordinate the string representation of
+        that room is provided.
+        """
+        dungeon_map = self._map_whole_dungeon()
+        for i in dungeon_map:
+            print(i)
+
+    def _map_whole_dungeon(self) -> List[List[str]]:
+        """Internal method for generating the map of the dungeon.
+
+        The map of the dungeon is implemented as a list of lists. Each list
+        is a representation of row of the dungeon. Within a given row, each item
+        in the list represents a column in the dungeon. If a space in the dungeon
+        is empty(there isn't a room there), it is represented by an empty string.
+        if a room is present at the given coordinate the string representation of
+        that room is provided.
+
+        Returns:
+            list: See detailed explanation.
+        """
+        map_storage = []
+        for a in range(1, self._map_height + 1):
+            map_storage.append(["   "] * (self._map_width))
+            for room in self.rooms:
+                if room.y == a:
+                    map_storage[a - 1][room.x - 1] = str(room)
+        # The map is ordered from bottom to top. If we print the list in this
+        # way the top row would be the bottom of the dungeon, hence the reverse.
+        map_storage.reverse()
+        return map_storage
