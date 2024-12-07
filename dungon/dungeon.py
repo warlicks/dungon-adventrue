@@ -158,7 +158,18 @@ class Dungeon:
     # TODO: Should this be internal or external? Should this live here or in dungeon_adventure?
     # This should be modular enough to pick it up and move it with minimal changes.
     def _place_game_objectives(self, objectives: List[str]) -> None:
+        """Internal method to place the game objective in random rooms.
 
+        Game objectives cannot be placed in rooms with an entrance
+        (first room placed) or the room with the exit (last room placed).
+
+        Args:
+            objectives (List[str]): A list containing the name of the game objectives.
+
+        Raises:
+            ValueError: Indicates that there are not enough rooms in the dungeon
+              to place all the objectives
+        """
         num_objectives = len(objectives)
 
         # We do -2 because we can't place things in the entrance or exit rooms.
@@ -181,6 +192,30 @@ class Dungeon:
         previous_vertical_door: str,
         new_vertical_door: str,
     ):
+        """Internal method to connect rooms via "tunnels".
+
+        There are some edge cases where a door is already connected to the
+        previous room. When connecting rooms by the doors we first check to make
+        sure that a connection does not exist at that door. If a connection exists,
+        we make the connection using the alternate tunnel route (horizontal or vertical).
+
+        Args:
+            path (str): A string indicating if the default "tunnel path" is
+                horizontal ("H") or vertical "V". This is randomly chosen
+                using _decide_connection_path
+            previous_room (Room): The room last created, which will be connected
+                to the current room.
+            new_room (Room): The current room being added to the dungeon. It will
+                be connected to the previously created room.
+            previous_horizontal_door (str): The door used to exit the previous
+              room if the "tunnel" goes horizontal first.
+            new_horizontal_door (str): The door used to enter the new room if
+              the "tunnel" goes horizontal first.
+            previous_vertical_door (str):  The door used to exit the previous
+              room if the "tunnel" goes vertical first.
+            new_vertical_door (str): The door used to enter the new room if
+              the "tunnel" goes vertical first.
+        """
         # TODO: Add A check that the door strings are valid. Should be North, East, South, West.
         if path == "H":
             # Check to make sure the door isn't in use already. If in use go other path.
@@ -215,7 +250,7 @@ class Dungeon:
                     self.object_counts[key] = 1
 
     def __str__(self):
-        """String repersentation of the maze.
+        """String representation of the maze.
 
         It reports on the number of rooms and the types of objects in the maze. The quantity
         of each object is reported too.
@@ -226,7 +261,7 @@ class Dungeon:
             f"""
         The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.
         Hidden in the maze, you can find:
-        
+
         {content_str}.
             """
         )
