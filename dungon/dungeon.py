@@ -43,7 +43,7 @@ class Dungeon:
         are randomly assigned to hide the game objectives.
 
         """
-        # Rest the maze just in case one was created before.
+        # Reset the maze just in case one was created before.
         self.rooms = []
         num_rooms = 0
 
@@ -214,7 +214,7 @@ class Dungeon:
                     self.object_counts[key] = 1
 
     def __str__(self):
-        """String repersentation of the maze.
+        """String representation of the maze.
 
         It reports on the number of rooms and the types of objects in the maze. The quantity
         of each object is reported too.
