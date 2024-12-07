@@ -224,3 +224,4 @@ class Dungeon:
         msg = f"The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.\n\nHidden in the maze, you can find:\n\t{content_str}."
 
         return msg
+

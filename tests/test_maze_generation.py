@@ -6,8 +6,8 @@ from dungon.dungeon import Dungeon
 def dungeon() -> Dungeon:
     """Create a dungeon with 6 rooms to test generation
 
-    Six rooms in the minimum needed to test that we have an entrance, an exit and
-    all four pillars of object oriented programming. It is also reasonable size for
+    Six rooms is the minimum needed to test that we have an entrance, an exit and
+    all four pillars of object oriented programming. It is also a reasonable size for
     making sure all the rooms are connected.
 
     Since pits, health potions and vision potions are randomly created, I'm not going to

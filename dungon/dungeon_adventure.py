@@ -110,3 +110,33 @@ class DungeonAdventure:
             return False
         else:
             return True
+
+    def room_vision(self, num_rm_view = 8):
+        """Prints a visual representation of the nearest
+        num_rm_view (defaults to 8) rooms surrounding current room. Implementation of Vision potion
+        which is used to allow user to see eight rooms surrounding current room and current room.
+        location in maze may cause less than num_rm_view (defaults to 8) to be displayed."""
+
+        # note: we need to know what the current room is, so I imported dungeon_adventure from dungon
+        # dungeon_adventure.current_room <-- note, we don't need the actual object can just use coordinates?
+
+        # from dungon.room import Room
+        # Room._room_content_string()
+        view_around = round(num_rm_view/2)
+
+        minx, miny = self.current_room.x - view_around, self.current_room.y - view_around
+        maxx, maxy = self.current_room.x + view_around, self.current_room.y + view_around
+
+        print(f"The view in the grid between: bottom left ({minx}, {miny}), \n "
+              f"bottom right ({minx}, {maxy}), \n"
+              f"top left ({maxx}, {miny}), \n"
+              f"top right ({maxx}, {maxy}):")
+
+        print_rooms = []
+        for room in self.dungeon.rooms:
+            if minx <= room.x <= maxx and miny <= room.y <= maxy:
+                print_rooms.append(room)
+                print(f"adding {room} to print out list")
+
+        print(f"create visual for {print_rooms}")
+
