@@ -2,7 +2,6 @@ import random
 import textwrap
 from .adventurer import Adventurer
 from .dungeon import Dungeon
-from dungon import dungeon
 
 
 class DungeonAdventure:
@@ -31,12 +30,13 @@ class DungeonAdventure:
         print(
             f"* You are starting in a room at ({self.current_room.x}, {self.current_room.y})* "
         )
+        print(self.current_room)
         self.check_room_content()
 
     def chose_action(self):
         input_options = textwrap.dedent(
             f"""
-                                        
+
         *******************************************************************************
         What would you like to do now, {self.adventurer.name}?
             1. Explore the Dungeon.
@@ -46,7 +46,7 @@ class DungeonAdventure:
         (Please enter a number from the menu above):  """
         )
         user_choice = input(input_options)
-        while user_choice not in ["1", "2", "3", "4"]:
+        while user_choice not in ["1", "2", "3", "4", "10"]:
             user_choice = input(input_options)
 
         return int(user_choice)
@@ -54,7 +54,7 @@ class DungeonAdventure:
     def move_rooms(self) -> bool:
         move_options = textwrap.dedent(
             f"""
-            Which direction would you like to move? 
+            Which direction would you like to move?
                 1. North
                 2. East
                 3. South
@@ -144,33 +144,23 @@ class DungeonAdventure:
         msg = textwrap.dedent(
             """
         --------------------------------------------------------------------------------
-        Welcome to the Dungeon of Perpetual Code Bugs. Your mission is to end         
-        the cycle of endless bugs by finding the four pillars of object oriented      
-        programming. The four pillars, "Abstraction", "Encapsulation", "Inheritance", 
+        Welcome to the Dungeon of Perpetual Code Bugs. Your mission is to end
+        the cycle of endless bugs by finding the four pillars of object oriented
+        programming. The four pillars, "Abstraction", "Encapsulation", "Inheritance",
         and "Polymorphism", are scattered throughout the dungeon.
-                                                                                      
-        Finding all four objectives will be no easy feat. The maze is full of doors 
-        that lead no where and rooms with hidden pits that can fall into. While there 
-        are dangers in the maze, there also tools in the maze that can help you. 
+
+        Finding all four objectives will be no easy feat. The maze is full of doors
+        that lead no where and rooms with hidden pits that can fall into. While there
+        are dangers in the maze, there also tools in the maze that can help you.
         Health potions will repair damage done by pits and vision potions can help you
         navigate the maze!
-     
+
         To win the game you need to find all four pillars and make it to the dungeon's
         exit with your health intact! If you run out of health or exit before finding
-        all four pillars you'll be stuck debugging poorly documented issues until the 
+        all four pillars you'll be stuck debugging poorly documented issues until the
         end of time.
         --------------------------------------------------------------------------------
         """
         )
 
         return msg
-
-    def _print_whole_dungeon(self):
-        map_storage = []
-        for a in range(1, self.dungeon._map_height):
-            if a == 1 or a == self.dungeon._map_height:
-                map_storage.append(["   "] * self.dungeon._map_width)
-            else:
-                for room in self.dungeon.rooms:
-                    if room.y == a:
-                        map_storage[a - 1][room.x - 1] = str(room)

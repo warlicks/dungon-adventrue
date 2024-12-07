@@ -23,6 +23,8 @@ def main():
             print("VISION POTION NOT IMPLEMENTED")
         elif action == 4:
             d.adventurer.player_status()
+        elif action == 10:
+            d.dungeon.print_dungeon_map()
 
 
 if __name__ == "__main__":
