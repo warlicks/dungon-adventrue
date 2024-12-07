@@ -8,6 +8,7 @@ class DungeonAdventure:
         self.dungeon = Dungeon(**kwargs)
         self.adventurer = Adventurer(None)
         self.current_room = None
+        self.continue_game = True
 
     def start_game(self):
         # TODO: Print Welcome Message.
@@ -37,9 +38,15 @@ class DungeonAdventure:
         3. Use A Vision Potion.
         4. Check My Status.
         """
-        user_choice = input(input_options)
-        while user_choice not in ["1", "2", "3", "4"]:
+        if not self._check_for_exit():
             user_choice = input(input_options)
+            while user_choice not in ["1", "2", "3", "4"]:
+                user_choice = input(input_options)
+        else:
+            input_option_with_exit = input_options + "5. Exit the Maze"
+            user_choice = input(input_option_with_exit)
+            while user_choice not in ["1", "2", "3", "4"]:
+                user_choice = input(input_options)
 
         return int(user_choice)
 
@@ -107,30 +114,40 @@ class DungeonAdventure:
         """
 
         if self.adventurer.health_score == 0:
-            return False
+            self._lose_no_health()
+            self.continue_game = False
         else:
-            return True
+            self.continue_game = True
 
-    def room_vision(self, num_rm_view = 8):
+    def room_vision(self, num_rm_view=8):
         """Prints a visual representation of the nearest
         num_rm_view (defaults to 8) rooms surrounding current room. Implementation of Vision potion
         which is used to allow user to see eight rooms surrounding current room and current room.
-        location in maze may cause less than num_rm_view (defaults to 8) to be displayed."""
+        location in maze may cause less than num_rm_view (defaults to 8) to be displayed.
+        """
 
         # note: we need to know what the current room is, so I imported dungeon_adventure from dungon
         # dungeon_adventure.current_room <-- note, we don't need the actual object can just use coordinates?
 
         # from dungon.room import Room
         # Room._room_content_string()
-        view_around = round(num_rm_view/2)
+        view_around = round(num_rm_view / 2)
 
-        minx, miny = self.current_room.x - view_around, self.current_room.y - view_around
-        maxx, maxy = self.current_room.x + view_around, self.current_room.y + view_around
+        minx, miny = (
+            self.current_room.x - view_around,
+            self.current_room.y - view_around,
+        )
+        maxx, maxy = (
+            self.current_room.x + view_around,
+            self.current_room.y + view_around,
+        )
 
-        print(f"The view in the grid between: bottom left ({minx}, {miny}), \n "
-              f"bottom right ({minx}, {maxy}), \n"
-              f"top left ({maxx}, {miny}), \n"
-              f"top right ({maxx}, {maxy}):")
+        print(
+            f"The view in the grid between: bottom left ({minx}, {miny}), \n "
+            f"bottom right ({minx}, {maxy}), \n"
+            f"top left ({maxx}, {miny}), \n"
+            f"top right ({maxx}, {maxy}):"
+        )
 
         print_rooms = []
         for room in self.dungeon.rooms:
@@ -140,3 +157,38 @@ class DungeonAdventure:
 
         print(f"create visual for {print_rooms}")
 
+    def _check_for_exit(self) -> bool:
+        if "exit" in self.current_room.content.keys():
+            return True
+        else:
+            return False
+
+    def maze_exit_outcome(self):
+        present = [
+            x in self.adventurer.inventory["pillar"]
+            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+        ]
+
+        if all(present):
+            self._winning_message()
+            self.continue_game = False
+        else:
+            self._lose_maze_exit()
+            self.continue_game = False
+
+    def _winning_message(self):
+        print("You Win!")
+
+    def _lose_maze_exit(self):
+        missing = [
+            x
+            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+            if x not in self.adventurer.inventory["pillar"]
+        ]
+        print("You left the maze without finding")
+        print("\n".join(missing))
+
+    def _lose_no_health(self):
+        print(
+            "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!"
+        )
