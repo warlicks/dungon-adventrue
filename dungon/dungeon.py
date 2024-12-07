@@ -1,4 +1,5 @@
 import random
+import textwrap
 from typing import List
 from .room import Room
 
@@ -221,6 +222,13 @@ class Dungeon:
         """
         content_list = [f"{k}: {v}" for k, v in self.object_counts.items()]
         content_str = "\n\t".join(content_list)
-        msg = f"The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.\n\nHidden in the maze, you can find:\n\t{content_str}."
+        msg = textwrap.dedent(
+            f"""
+        The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.
+        Hidden in the maze, you can find:
+        
+        {content_str}.
+            """
+        )
 
         return msg
