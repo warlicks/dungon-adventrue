@@ -10,8 +10,10 @@ def dungeon_explorer() -> Adventurer:
 
 
 def test_player_name(dungeon_explorer):
-    """Test that the name get's set correctly at instance creation"""
+    """Test that the name gets set correctly at instance creation"""
+
     assert dungeon_explorer.name == "Player 1"
+
 
 def test_add_health(dungeon_explorer):
     """Test that health is correctly update.
@@ -22,7 +24,7 @@ def test_add_health(dungeon_explorer):
     """
     starting_health = dungeon_explorer.health_score
     
-    # IF our starting health would go over 100 we need to set our expect3ed value to 
+    # IF our starting health would go over 100 we need to set our expected value to
     # 100. Otherwise we just do math. 
     if starting_health >= 90:
         expected_value = 100
@@ -30,14 +32,17 @@ def test_add_health(dungeon_explorer):
         expected_value = starting_health + 10
     dungeon_explorer.increase_health(10)
 
-    assert starting_health >= 75 and starting_health <= 100
+    assert 75 <= starting_health <= 100
     assert dungeon_explorer.health_score == expected_value
+
 
 def test_subtract_health(dungeon_explorer):
     """Test that health is correctly subtracted"""
     starting_health = dungeon_explorer.health_score
     dungeon_explorer.decrease_health(20)
+
     assert dungeon_explorer.health_score == (starting_health - 20)
+
 
 def test_subtract_health_below_zero(dungeon_explorer):
     """Test if value goes below zero it returns zero
@@ -46,6 +51,7 @@ def test_subtract_health_below_zero(dungeon_explorer):
     dungeon_explorer.decrease_health(200)
 
     assert dungeon_explorer.health_score == 0
+
 
 def test_known_keys(dungeon_explorer):
     """Test that we can add health, vision and game objectives to the inventory
@@ -58,14 +64,21 @@ def test_known_keys(dungeon_explorer):
     
     assert dungeon_explorer.inventory.keys() == original_keys
     assert len(dungeon_explorer.inventory["health potion"]) == 1
+    assert dungeon_explorer.inventory["health potion"] == [10]
     assert len(dungeon_explorer.inventory["vision potion"]) == 1
+    assert dungeon_explorer.inventory["vision potion"] == [True]
     assert len(dungeon_explorer.inventory["pillar"]) == 1
+    assert dungeon_explorer.inventory["pillar"] == ['E']
+
 
 def test_new_inventory_type(dungeon_explorer):
     """Test we can easily add new object types to the inventory."""
     dungeon_explorer.add_to_inventory("sword", 100)
+
     assert "sword" in dungeon_explorer.inventory.keys()
+    # can add an assert that checks 100 associated with sword
     assert len(dungeon_explorer.inventory.keys()) == 4
+
 
 def test_no_wand_inventory(dungeon_explorer, capsys):
     """Test the the correct message is printed when you try to remove an 
@@ -74,8 +87,8 @@ def test_no_wand_inventory(dungeon_explorer, capsys):
     dungeon_explorer.remove_from_inventory("magic wand", 10)
     capture = capsys.readouterr()
 
-
     assert capture.out == "No magic wand is in inventory.\n"
+
 
 def test_wrong_health_potion(dungeon_explorer, capsys):
     """Test that the function handles when an item type is present, but an item of that
