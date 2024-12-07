@@ -108,8 +108,8 @@ class DungeonAdventure:
         )
         self.adventurer.decrease_health(pit_value)
 
-    def _check_player_health(self) -> bool:
-        """Internal checks to see if the avatar still has health, used to determine
+    def check_player_health(self):
+        """Checks to see if the avatar still has health, used to determine
         if the game continues.
         """
 
@@ -156,6 +156,29 @@ class DungeonAdventure:
                 print(f"adding {room} to print out list")
 
         print(f"create visual for {print_rooms}")
+
+    def health_potion(self):
+        if not self.adventurer.inventory["health potion"]:
+            print("You don't have any health potion to use")
+        else:
+            input_msg = (
+                "Which health potion would you like to use?"
+                + "\n".join(  # Need str(x) b/c join won't work w/ the int value in the list
+                    [str(x) for x in self.adventurer.inventory["health potion"]]
+                )
+                + "Please enter the value of the potion you would like to use: "
+            )
+            potion_value = input(input_msg)
+            while (
+                int(potion_value) not in self.adventurer.inventory["health potion"]
+                or not potion_value.isnumeric()
+            ):
+                potion_value = input(input_msg)
+
+            # Remove from inventory
+            self.adventurer.remove_from_inventory("health potion", int(potion_value))
+            self.adventurer.increase_health(int(potion_value))
+            print(f"Your health has increased to {self.adventurer.health_score}")
 
     def _check_for_exit(self) -> bool:
         if "exit" in self.current_room.content.keys():

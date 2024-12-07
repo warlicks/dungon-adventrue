@@ -54,3 +54,13 @@ def test_losing(losing_dungeon, capsys):
     assert capture.out.startswith("You left the maze without finding\n")
     assert capture.out.endswith("Polymorphism\n")
     assert losing_dungeon.continue_game is False
+
+
+def test_losing_health(winning_dungeon, capsys):
+    exp_msg = "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!\n"
+    winning_dungeon.adventurer.health_score = 0
+
+    winning_dungeon.check_player_health()
+    capture = capsys.readouterr()
+    assert capture.out == exp_msg
+    assert winning_dungeon.continue_game is False
