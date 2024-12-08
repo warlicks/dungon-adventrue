@@ -1,7 +1,7 @@
 from dungon.dungeon_adventure import DungeonAdventure
 
 
-def main():
+def play_game():
     d = DungeonAdventure(
         max_rooms=6,
         map_height=5,
@@ -49,4 +49,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    play_game()
