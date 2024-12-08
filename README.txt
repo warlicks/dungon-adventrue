@@ -26,13 +26,17 @@ were were not successful in writing automated unit testing that methods
 accepting user input would handle invalid input correctly. We ultimately tested
 this manually.
 
+We had some ideas of additional things we could add to increase the creativity
+such as levels to the game based on tweaking the probability of things like
+pits or increasing rooms. However, we ran out of time to implement them.
+
 ## Playing the game
 ```python
 python main.py
 ```
 
 ## Additional Requested info:
-Time spent on project: Sean    , Gabby ~ 2 days
+Time spent on project: Sean ~ 3 days, Gabby ~ 2 days
 
 Work each person did: 
 - Sean: github management (branches, issues, discussion, etc), game logic, dungeon/room/dungeon adventure, health potion, research on maze generation, testing, docstrings, UML, fun and creative intro (at least according to Gabby)!
