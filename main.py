@@ -21,13 +21,31 @@ def main():
         elif action == 2:
             d.health_potion()
         elif action == 3:
-            d.room_vision()
+            """Implement Vision Potion. They can see the dungeon a specified
+            height and width around the current room if they have Vision Potion
+            in their inventory."""
+            if (
+                len(d.adventurer.inventory.get("vision potion")) != 0
+            ):  # ie if list is not empty
+                # if they have the potion, print visual and remove potion
+                d.room_vision(vision_potion=True)
+                d.adventurer.inventory["vision potion"].pop(
+                    0
+                )  # removes first vision potion in list
+            else:
+                print(
+                    "Nice try! You can't use a Vision Potion unless it is in your inventory!\n"
+                )
+
         elif action == 4:
             d.adventurer.player_status()
-        elif action == 10:
-            d.dungeon.print_dungeon_map()
+
         elif action == 5:
             d.maze_exit_outcome()
+
+        elif action == 10:
+            """See the whole dungeon map."""
+            d.room_vision(vision_potion=False)
 
 
 if __name__ == "__main__":
