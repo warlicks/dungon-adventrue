@@ -6,6 +6,8 @@ from dungon.room import Room
 
 @pytest.fixture
 def dungeon():
+    """Create dungeon adventure with two connected rooms to
+    test functionality of moving rooms."""
     d = DungeonAdventure()
 
     # Manually Set Up Rooms
@@ -21,7 +23,7 @@ def dungeon():
 
 
 def test_successful_move(dungeon, monkeypatch):
-    """"""
+    """Test the move_rooms option lands where user would expect"""
     user_input = StringIO("2\n")
     monkeypatch.setattr("sys.stdin", user_input)
 
@@ -31,6 +33,7 @@ def test_successful_move(dungeon, monkeypatch):
 
 
 def test_unsuccessful_move(dungeon, monkeypatch, capsys):
+    """Test the move_rooms return message when a door is blocked"""
     user_input = StringIO("1\n")
     monkeypatch.setattr("sys.stdin", user_input)
     dungeon.move_rooms()
@@ -44,6 +47,8 @@ def test_unsuccessful_move(dungeon, monkeypatch, capsys):
 
 @pytest.fixture
 def three_room_dungeon():
+    """Create dungeon adventure with three connected rooms to
+    test functionality of moving rooms."""
     d = DungeonAdventure()
 
     # Manually Set Up Rooms
@@ -62,6 +67,7 @@ def three_room_dungeon():
 
 
 def test_movement_with_multiple_con(three_room_dungeon, monkeypatch):
+    """Test the move_rooms option lands where user would expect"""
     user_input = StringIO("4\n")
     monkeypatch.setattr("sys.stdin", user_input)
     three_room_dungeon.move_rooms()
