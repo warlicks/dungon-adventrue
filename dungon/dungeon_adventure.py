@@ -11,6 +11,15 @@ class DungeonAdventure:
         self.continue_game = True
 
     def start_game(self):
+        """Starts the game.
+
+        When the game is started this handles a number of tasks.
+        1. Prints a welcome message and explains game.
+        2. Takes input from player for avatar name.
+        3. Generates a new dungeon.
+        4. Displays Avatar status.
+        5. Displays Maze status and current room.
+        """
         # TODO: Print Welcome Message.
 
         # Set Up The Player
@@ -31,6 +40,16 @@ class DungeonAdventure:
         self.check_room_content()
 
     def chose_action(self):
+        """Accepts player choice at the start of each turn.
+
+        The player chose from four displayed options.
+        Explore the dungeon, use potions or check their status. If they get an
+        additional option if they are in a room with an exit; they can chose to
+        use the exit.
+
+        There is a hidden option to display the maze map. If the user inputs 10,
+        the maze map will be displayed.
+        """
         input_options = f"""What would you like to do now, {self.adventurer.name}?
         Please Enter A Number from the Menu Below.
         1. Explore the Dungeon.
@@ -51,6 +70,13 @@ class DungeonAdventure:
         return int(user_choice)
 
     def move_rooms(self) -> bool:
+        """Accepts player movement choices.
+        Presents the player with the option to move North, East, South or West.
+
+        If the selected direction leads to a new room they get a message about
+        the new room. If the door is blocked they get a message indicating the
+        door was blocked
+        """
         move_options = f"""\nWhich direction would you like to move?\n\t1. North\n\t2. East\n\t3. South\n\t4. West\n"""
         move_keys = {"1": "North", "2": "East", "3": "South", "4": "West"}
         user_move_choice = input(move_options)
@@ -69,6 +95,11 @@ class DungeonAdventure:
             return False
 
     def check_room_content(self):
+        """Checks the room for any content.
+
+        If content is present in the room it is automatically picked up and
+        added to the avatar's inventory.
+        """
         if len(self.current_room.content.keys()) == 0:
             print(f"\\nThe current room is empty")
         if "health potion" in self.current_room.content.keys():
@@ -84,18 +115,33 @@ class DungeonAdventure:
             self.fall_in_pit(self.current_room.content["pit"])
 
     def pick_up_health_potion(self, potion_value: int):
+        """Picks up a health potion and adds it to the player inventory.
+
+        Args:
+            potion_value (int): The value of the health potion
+        """
         self.adventurer.add_to_inventory("health potion", potion_value)
         print(
             f"\\nYou found a Health Potion worth {potion_value} health points in the Room. It has been added to your inventory."
         )
 
     def pick_up_vision_potion(self, potion_value: bool = True):
+        """Picks up a vision potion and adds it to the player inventory.
+
+        Args:
+            potion_value (bool, optional): The default vision potion value is True.
+        """
         self.adventurer.add_to_inventory("vision potion", potion_value)
         print(
             f"You found a Vision Potion in the room. It has been added to your inventory."
         )
 
     def pick_up_pillar(self, pillar_name: str):
+        """Picks up a game objective and adds it to the player inventory.
+
+        Args:
+            pillar_name (str): The name of the objective found.
+        """
         self.adventurer.add_to_inventory("pillar", pillar_name)
         print(
             f"You found {pillar_name} in the Room! It has been added to your inventory"
@@ -103,6 +149,11 @@ class DungeonAdventure:
         # TODO: Print message about the pillars you still need to find.
 
     def fall_in_pit(self, pit_value: int):
+        """Updates the avatar health when they fall in a pit.
+
+        Args:
+            pit_value (int): The health damage of the pit.
+        """
         print(
             f"You fell in a pit! You lost {pit_value} health points! Your current health score is: {self.adventurer.health_score}"
         )
@@ -169,10 +220,8 @@ class DungeonAdventure:
                 + "Please enter the value of the potion you would like to use: "
             )
             potion_value = input(input_msg)
-            while (
-                int(potion_value) not in self.adventurer.inventory["health potion"]
-                or not potion_value.isnumeric()
-            ):
+            temp = [str(x) for x in self.adventurer.inventory["health potion"]]
+            while potion_value not in temp:
                 potion_value = input(input_msg)
 
             # Remove from inventory
@@ -181,12 +230,26 @@ class DungeonAdventure:
             print(f"Your health has increased to {self.adventurer.health_score}")
 
     def _check_for_exit(self) -> bool:
+        """Internal method to check if the room has a maze exit.
+
+        This method is used to present users with an option to exit the maze
+        when they are in the room with the exit.
+
+
+        Returns:
+            bool: Indicates if an exit is present.
+        """
         if "exit" in self.current_room.content.keys():
             return True
         else:
             return False
 
     def maze_exit_outcome(self):
+        """Checks if the player has won when they exit the maze.
+
+        To win the the player must have all the game objectives when they exit
+        the dungeon.
+        """
         present = [
             x in self.adventurer.inventory["pillar"]
             for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
