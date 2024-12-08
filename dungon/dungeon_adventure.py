@@ -5,8 +5,11 @@ from .dungeon import Dungeon
 
 
 class DungeonAdventure:
+    """Builds Dungeon Adventure which takes in the dungeon, adventurer, and room
+     objects and provides users options to interact with them."""
     def __init__(self, **kwargs) -> None:
         self.dungeon = Dungeon(**kwargs)
+        self.adventurer = Adventurer(None)
         self.adventurer = Adventurer(None)
         self.current_room = None
         self.continue_game = True
@@ -230,6 +233,8 @@ class DungeonAdventure:
             if minx <= room.x <= maxx and miny <= room.y <= maxy:
                 print_rooms.append(room)
 
+        combined_string = ""
+
         # print one row at a time. all together will create grid.
         for print_row in range(miny, maxy + 1):
             # each x-coordinate value of 1 (width) gets 3 spaces.
@@ -248,9 +253,17 @@ class DungeonAdventure:
             print(row_str1)
             print(row_str2)
             print(row_str3)
+            combined_string = combined_string + \
+                              row_str1 + \
+                              row_str2 + \
+                              row_str3
+
         print(f"create visual for {print_rooms}")
+        return combined_string
 
     def health_potion(self):
+        """Manages adventurers health potion within their inventory.
+        They can use it and if they do it is removed from inventory."""
         if not self.adventurer.inventory["health potion"]:
             print("You don't have any health potion to use")
         else:
@@ -332,7 +345,7 @@ class DungeonAdventure:
         self.room_vision()
 
     def _welcome_message(self):
-
+        """Internal method that prints the message at the start of the game."""
         msg = textwrap.dedent(
             """
         --------------------------------------------------------------------------------

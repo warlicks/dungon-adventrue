@@ -21,6 +21,7 @@ def dungeon() -> Dungeon:
 
 
 def test_dungeon_print(dungeon):
+    """Test the internal method for _map_whole_dungeon prints out as expected"""
     expected_print_room_map = [
         [
             "   ",
