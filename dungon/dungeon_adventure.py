@@ -303,6 +303,7 @@ class DungeonAdventure:
         else:
             self._lose_maze_exit()
             self.continue_game = False
+        self.room_vision()
 
     def _winning_message(self):
         """Internal method prints message when you win the game."""
@@ -328,6 +329,7 @@ class DungeonAdventure:
         print(
             "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!"
         )
+        self.room_vision()
 
     def _welcome_message(self):
 
@@ -368,3 +370,4 @@ class DungeonAdventure:
         --------------------------------------------------------------------------------
         """
         )
+        return msg

@@ -54,7 +54,7 @@ def test_losing(losing_dungeon, capsys):
     assert capture.out.startswith(
         "\nYou'll be stuck debugging poorly documented issues until the end of time"
     )
-    assert capture.out.endswith("Polymorphism\n")
+    assert capture.out.find("Polymorphism\n") != -1
     assert losing_dungeon.continue_game is False
 
 
@@ -64,5 +64,5 @@ def test_losing_health(winning_dungeon, capsys):
 
     winning_dungeon.check_player_health()
     capture = capsys.readouterr()
-    assert capture.out == exp_msg
+    assert capture.out.startswith(exp_msg)
     assert winning_dungeon.continue_game is False
