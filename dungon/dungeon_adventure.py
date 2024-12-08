@@ -198,161 +198,53 @@ class DungeonAdventure:
         else:
             self.continue_game = True
 
-    def room_vision(self, num_rm_view=8):
+    def room_vision(self, vision_potion=False, num_rm_view=8):
         """Prints a visual representation of the nearest
         num_rm_view (defaults to 8) rooms surrounding current room. Implementation of Vision potion
         which is used to allow user to see eight rooms surrounding current room and current room.
         location in maze may cause less than num_rm_view (defaults to 8) to be displayed.
         """
 
-        # note: we need to know what the current room is, so I imported dungeon_adventure from dungon
-        # dungeon_adventure.current_room <-- note, we don't need the actual object can just use coordinates?
+        if vision_potion is True:
+            # set distance on map around current room to print. currently is 4 in either direction
+            view_around = round(num_rm_view / 2)
 
-        # from dungon.room import Room
-        # Room._room_content_string()
-        view_around = round(num_rm_view / 2)
+            minx, miny = (
+                self.current_room.x - view_around,
+                self.current_room.y - view_around,
+            )
+            maxx, maxy = (
+                self.current_room.x + view_around,
+                self.current_room.y + view_around,
+            )
+            minx = max(minx, 0)  # remove negatives
+            miny = max(miny, 0)  # remove negatives
 
-        minx, miny = (
-            self.current_room.x - view_around,
-            self.current_room.y - view_around,
-        )
-        maxx, maxy = (
-            self.current_room.x + view_around,
-            self.current_room.y + view_around,
-        )
+        else:
+            miny, maxy = 0, self.dungeon._map_height
+            minx, maxx = 0, self.dungeon._map_width
 
-        print(
-            f"The view in the grid between: bottom left ({minx}, {miny}), \n "
-            f"bottom right ({minx}, {maxy}), \n"
-            f"top left ({maxx}, {miny}), \n"
-            f"top right ({maxx}, {maxy}):"
-        )
-
+        # create a list of rooms to include in our visual based on min and max x and y above
         print_rooms = []
         for room in self.dungeon.rooms:
             if minx <= room.x <= maxx and miny <= room.y <= maxy:
                 print_rooms.append(room)
-                print(f"adding {room} to print out list")
 
-        print(f"create visual for {print_rooms}")
-
-    def health_potion(self):
-        if not self.adventurer.inventory["health potion"]:
-            print("You don't have any health potion to use")
-        else:
-            input_msg = (
-                "Which health potion would you like to use?"
-                + "\n".join(  # Need str(x) b/c join won't work w/ the int value in the list
-                    [str(x) for x in self.adventurer.inventory["health potion"]]
-                )
-                + "Please enter the value of the potion you would like to use: "
-            )
-            potion_value = input(input_msg)
-            temp = [str(x) for x in self.adventurer.inventory["health potion"]]
-            while potion_value not in temp:
-                potion_value = input(input_msg)
-
-            # Remove from inventory
-            self.adventurer.remove_from_inventory("health potion", int(potion_value))
-            self.adventurer.increase_health(int(potion_value))
-            print(f"Your health has increased to {self.adventurer.health_score}")
-
-    def _check_for_exit(self) -> bool:
-        """Internal method to check if the room has a maze exit.
-
-        This method is used to present users with an option to exit the maze
-        when they are in the room with the exit.
-
-
-        Returns:
-            bool: Indicates if an exit is present.
-        """
-        if "exit" in self.current_room.content.keys():
-            return True
-        else:
-            return False
-
-    def maze_exit_outcome(self):
-        """Checks if the player has won when they exit the maze.
-
-        To win the the player must have all the game objectives when they exit
-        the dungeon.
-        """
-        present = [
-            x in self.adventurer.inventory["pillar"]
-            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
-        ]
-
-        if all(present):
-            self._winning_message()
-            self.continue_game = False
-        else:
-            self._lose_maze_exit()
-            self.continue_game = False
-
-    def _winning_message(self):
-        """Internal method prints message when you win the game."""
-        print("You Win!")
-        print(
-            "You've ended cycle of endless bugs by finding the four pillars of object oriented programming."
-        )
-
-    def _lose_maze_exit(self):
-        """Internal method generate message if you lose the game b/c of exiting the maze early."""
-        missing = [
-            x
-            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
-            if x not in self.adventurer.inventory["pillar"]
-        ]
-        print(
-            "\nYou'll be stuck debugging poorly documented issues until the end of time! You left the maze without finding\n"
-        )
-        print("\n".join(missing))
-
-    def _lose_no_health(self):
-        """Internal method generates message if you lose the game because of no health."""
-        print(
-            "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!"
-        )
-
-    def _welcome_message(self):
-
-        msg = textwrap.dedent(
-            """
-        --------------------------------------------------------------------------------
-        Welcome to the Dungeon of Perpetual Code Bugs. Your mission is to end
-        the cycle of endless bugs by finding the four pillars of object oriented
-        programming. The four pillars, "Abstraction", "Encapsulation", "Inheritance",
-        and "Polymorphism", are scattered throughout the dungeon.
-
-        Finding all four objectives will be no easy feat. The maze is full of doors
-        that lead no where and rooms with hidden pits that can fall into. While there
-        are dangers in the maze, there also tools in the maze that can help you.
-        Health potions will repair damage done by pits and vision potions can help you
-        navigate the maze!
-
-        HOW TO PLAY
-
-        With each turn you will have the option to 1) Explore the maze,
-        2) Use a health potion, 3) Use a vision potion or 4) Check your status.
-
-        If you choose to explore the maze you will be asked which direction
-        (North, East, South, or West) you want to explore. If you find a new room,
-        any objects in the room will automatically be picked up. Likewise if you come
-        across a pit, you will fall in, destined to forever be trapped in a maze
-        of incomprehensible classes, and methods, and constructors (oh my!).
-
-        If you choose to use a health potion your health will increase by the
-        value of the potion and the potion will be removed from your inventory.
-        If you choose to use a vision potion you will be able to see part of the
-        dungeon around you.
-
-        To win the game you need to find all four pillars and make it to the dungeon's
-        exit with your health intact! If you run out of health or exit before finding
-        all four pillars you'll be stuck debugging poorly documented issues until the
-        end of time.
-        --------------------------------------------------------------------------------
-        """
-        )
-
-        return msg
+        # print one row at a time. all together will create grid.
+        for print_row in range(miny, maxy + 1):
+            # each x-coordinate value of 1 (width) gets 3 spaces.
+            # each row in dungeon has lines because of stars above and below
+            row_str1 = "   " * (maxx - minx + 1)
+            row_str2 = "   " * (maxx - minx + 1)
+            row_str3 = "   " * (maxx - minx + 1)
+            for room in print_rooms:  # check all the rooms to print
+                if room.y == print_row:  # if they are in the row
+                    # remove \n. makes count hard and changes spacing.
+                    rm_str = room.__str__().replace("\n", "")
+                    # and splice the current row strings (three lines per print_row)
+                    row_str1 = f"{row_str1[:(room.x * 3)]}{rm_str[0:3]}{row_str1[(room.x * 3 + 3) + 1:]}"
+                    row_str2 = f"{row_str2[:(room.x * 3)]}{rm_str[3:6]}{row_str2[(room.x * 3 + 3) + 1:]}"
+                    row_str3 = f"{row_str3[:(room.x * 3)]}{rm_str[6:9]}{row_str3[(room.x * 3 + 3) + 1:]}"
+            print(row_str1)
+            print(row_str2)
+            print(row_str3)

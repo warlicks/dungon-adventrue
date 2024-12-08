@@ -56,3 +56,10 @@ def test_multiple(r):
 
     assert r._room_content_string() == "|M|\n"
     assert str(r) == "*-*\n|M|\n*-*"
+
+
+def test_pillar_string(r):
+    r.generate_room_content("game_objective", "Abstraction", 1.0)
+
+    assert r._room_content_string() == "|A|\n"
+    assert str(r) == "*-*\n|A|\n*-*"
