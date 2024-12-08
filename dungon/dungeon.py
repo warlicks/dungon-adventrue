@@ -1,4 +1,5 @@
 import random
+import textwrap
 from typing import List
 from .room import Room
 
@@ -157,7 +158,18 @@ class Dungeon:
     # TODO: Should this be internal or external? Should this live here or in dungeon_adventure?
     # This should be modular enough to pick it up and move it with minimal changes.
     def _place_game_objectives(self, objectives: List[str]) -> None:
+        """Internal method to place the game objective in random rooms.
 
+        Game objectives cannot be placed in rooms with an entrance
+        (first room placed) or the room with the exit (last room placed).
+
+        Args:
+            objectives (List[str]): A list containing the name of the game objectives.
+
+        Raises:
+            ValueError: Indicates that there are not enough rooms in the dungeon
+              to place all the objectives
+        """
         num_objectives = len(objectives)
 
         # We do -2 because we can't place things in the entrance or exit rooms.
@@ -180,6 +192,30 @@ class Dungeon:
         previous_vertical_door: str,
         new_vertical_door: str,
     ):
+        """Internal method to connect rooms via "tunnels".
+
+        There are some edge cases where a door is already connected to the
+        previous room. When connecting rooms by the doors we first check to make
+        sure that a connection does not exist at that door. If a connection exists,
+        we make the connection using the alternate tunnel route (horizontal or vertical).
+
+        Args:
+            path (str): A string indicating if the default "tunnel path" is
+                horizontal ("H") or vertical "V". This is randomly chosen
+                using _decide_connection_path
+            previous_room (Room): The room last created, which will be connected
+                to the current room.
+            new_room (Room): The current room being added to the dungeon. It will
+                be connected to the previously created room.
+            previous_horizontal_door (str): The door used to exit the previous
+              room if the "tunnel" goes horizontal first.
+            new_horizontal_door (str): The door used to enter the new room if
+              the "tunnel" goes horizontal first.
+            previous_vertical_door (str):  The door used to exit the previous
+              room if the "tunnel" goes vertical first.
+            new_vertical_door (str): The door used to enter the new room if
+              the "tunnel" goes vertical first.
+        """
         # TODO: Add A check that the door strings are valid. Should be North, East, South, West.
         if path == "H":
             # Check to make sure the door isn't in use already. If in use go other path.
@@ -221,6 +257,51 @@ class Dungeon:
         """
         content_list = [f"{k}: {v}" for k, v in self.object_counts.items()]
         content_str = "\n\t".join(content_list)
-        msg = f"The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.\n\nHidden in the maze, you can find:\n\t{content_str}."
+        msg = textwrap.dedent(
+            f"""
+        The Maze is deep and twisting. There are {len(self.rooms)} rooms to explore and survive.
+        Hidden in the maze, you can find:
+
+        {content_str}.
+            """
+        )
 
         return msg
+
+    def print_dungeon_map(self):
+        """Prints a map of the dungeon to the terminal
+
+        The map of the dungeon is implemented as a list of lists. Each list
+        is a representation of row of the dungeon. Within a given row, each item
+        in the list represents a column in the dungeon. If a space in the dungeon
+        is empty(there isn't a room there), it is represented by an empty string.
+        if a room is present at the given coordinate the string representation of
+        that room is provided.
+        """
+        dungeon_map = self._map_whole_dungeon()
+        for i in dungeon_map:
+            print(i)
+
+    def _map_whole_dungeon(self) -> List[List[str]]:
+        """Internal method for generating the map of the dungeon.
+
+        The map of the dungeon is implemented as a list of lists. Each list
+        is a representation of row of the dungeon. Within a given row, each item
+        in the list represents a column in the dungeon. If a space in the dungeon
+        is empty(there isn't a room there), it is represented by an empty string.
+        if a room is present at the given coordinate the string representation of
+        that room is provided.
+
+        Returns:
+            list: See detailed explanation.
+        """
+        map_storage = []
+        for a in range(1, self._map_height + 1):
+            map_storage.append(["   "] * (self._map_width))
+            for room in self.rooms:
+                if room.y == a:
+                    map_storage[a - 1][room.x - 1] = str(room)
+        # The map is ordered from bottom to top. If we print the list in this
+        # way the top row would be the bottom of the dungeon, hence the reverse.
+        map_storage.reverse()
+        return map_storage

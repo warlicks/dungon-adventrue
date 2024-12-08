@@ -13,7 +13,7 @@ def test_empty_room_check(capsys):
     d.check_room_content()
     capture = capsys.readouterr()
 
-    assert capture.out == """\\nThe current room is empty\n"""
+    assert capture.out == """\nThe current room is empty\n"""
 
 
 def test_health_potion_in_room(capsys):
@@ -33,7 +33,7 @@ def test_health_potion_in_room(capsys):
 
     assert (
         capture.out
-        == "\\nYou found a Health Potion worth 10 health points in the Room. It has been added to your inventory.\n"
+        == "\nYou found a Health Potion worth 10 health points in the Room. It has been added to your inventory.\n"
     )
     assert d.adventurer.inventory["health potion"][0] == 10
     assert "health potion" not in d.current_room.content.keys()
@@ -56,7 +56,7 @@ def test_vision_potion_in_room(capsys):
 
     assert (
         capture.out
-        == "You found a Vision Potion in the room. It has been added to your inventory.\n"
+        == "\nYou found a Vision Potion in the room. It has been added to your inventory.\n"
     )
     assert d.adventurer.inventory["vision potion"][0]
     assert "vision potion" not in d.current_room.content.keys()
@@ -77,7 +77,7 @@ def test_game_pillar_in_room(capsys):
 
     assert (
         capture.out
-        == "You found Inheritance in the Room! It has been added to your inventory\n"
+        == "\n\tYou found Inheritance in the Room! It has been added to your inventory.\n"
     )
     assert d.adventurer.inventory["pillar"][0] == "Inheritance"
     assert "game_objective" not in d.current_room.content.keys()
