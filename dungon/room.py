@@ -130,6 +130,6 @@ class Room:
         elif "vision potion" in self.content.keys():
             middle = "|V|" + "\n"
         elif "game_objective" in self.content.keys():
-            middle = f"|{self.content['game_objective'][0]}|"
+            middle = f"|{self.content['game_objective'][0]}|\n"
 
         return middle
