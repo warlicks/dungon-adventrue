@@ -2,29 +2,30 @@
 platform linux -- Python 3.12.5, pytest-8.3.3, pluggy-1.5.0
 rootdir: /home/sean/Documents/dungon-adventrue
 plugins: cov-6.0.0
-collected 62 items
+collected 63 items
 
 tests/test_adventurer.py .........                                       [ 14%]
-tests/test_dungon_print.py .                                             [ 16%]
+tests/test_dungon_print.py .                                             [ 15%]
 tests/test_game_end_senario.py ...                                       [ 20%]
-tests/test_maze_generation.py ............                               [ 40%]
-tests/test_moving.py ...                                                 [ 45%]
-tests/test_picking_up_room_content.py ......                             [ 54%]
-tests/test_room_connection.py ..........                                 [ 70%]
-tests/test_room_content.py ........                                      [ 83%]
-tests/test_room_string_repersentation.py ........                        [ 96%]
-tests/test_use_potion.py ..                                              [100%]
+tests/test_maze_generation.py ............                               [ 39%]
+tests/test_moving.py ...                                                 [ 44%]
+tests/test_picking_up_room_content.py ......                             [ 53%]
+tests/test_room_connection.py ..........                                 [ 69%]
+tests/test_room_content.py ........                                      [ 82%]
+tests/test_room_string_repersentation.py ........                        [ 95%]
+tests/test_use_potion.py ..                                              [ 98%]
+tests/test_vision_potions.py .                                           [100%]
 
 ---------- coverage: platform linux, python 3.12.5-final-0 -----------
 Name                          Stmts   Miss  Cover
 -------------------------------------------------
 dungon/__init__.py                0      0   100%
-dungon/adventurer.py             47      8    83%
+dungon/adventurer.py             47      9    81%
 dungon/dungeon.py                98      7    93%
-dungon/dungeon_adventure.py     142     35    75%
+dungon/dungeon_adventure.py     146     35    76%
 dungon/room.py                   41      0   100%
 -------------------------------------------------
-TOTAL                           328     50    85%
+TOTAL                           332     51    85%
 
 
-============================== 62 passed in 0.16s ==============================
+============================== 63 passed in 0.13s ==============================
