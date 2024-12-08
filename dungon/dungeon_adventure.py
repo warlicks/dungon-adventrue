@@ -38,7 +38,7 @@ class DungeonAdventure:
         4. Check My Status.
         """
         user_choice = input(input_options)
-        while user_choice not in ["1", "2", "3", "4"]:
+        while user_choice not in ["1", "2", "3", "4", "10"]:
             user_choice = input(input_options)
 
         return int(user_choice)
