@@ -10,7 +10,7 @@ def main():
 
     d.start_game()
 
-    for i in range(50):
+    while d.continue_game:
         action = d.chose_action()
         # print(f"current location is ({d.current_room.x}, {d.current_room.y})")
 
@@ -19,12 +19,13 @@ def main():
             if new_room:
                 d.check_room_content()
         elif action == 2:
-            print("HEALTH POTION NOT IMPLEMENTED")
+            d.health_potion()
         elif action == 3:
-            print("VISION POTION NOT IMPLEMENTED")
             d.room_vision()
         elif action == 4:
             d.adventurer.player_status()
+        elif action == 5:
+            d.maze_exit_outcome()
 
 
 if __name__ == "__main__":

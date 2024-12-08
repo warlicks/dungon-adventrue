@@ -45,7 +45,7 @@ class DungeonAdventure:
         else:
             input_option_with_exit = input_options + "5. Exit the Maze"
             user_choice = input(input_option_with_exit)
-            while user_choice not in ["1", "2", "3", "4"]:
+            while user_choice not in ["1", "2", "3", "4", "5"]:
                 user_choice = input(input_options)
 
         return int(user_choice)
