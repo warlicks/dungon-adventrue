@@ -5,6 +5,8 @@ from dungon.dungeon_adventure import DungeonAdventure
 
 @pytest.fixture
 def test_dungeon():
+    """Create dungeon adventure with a health potion
+    in its inventory for use in testing"""
     d = DungeonAdventure()
     d.adventurer.add_to_inventory("health potion", 10)
     d.adventurer.health_score = 80
@@ -13,6 +15,8 @@ def test_dungeon():
 
 
 def test_use_health(test_dungeon, monkeypatch):
+    """Test expected output when user specifies
+    how much of the health potion to use"""
     user_input = StringIO("10\n")
     monkeypatch.setattr("sys.stdin", user_input)
 
@@ -23,6 +27,8 @@ def test_use_health(test_dungeon, monkeypatch):
 
 
 def test_no_health_to_use(test_dungeon, capsys):
+    """Test expected output when user tries to
+    use health potion and doesn't have any"""
     test_dungeon.adventurer.remove_from_inventory("health potion", 10)
 
     test_dungeon.health_potion()
