@@ -14,8 +14,8 @@ def dungeon() -> Dungeon:
 
     d = Dungeon()
     d.rooms = [room1, room2, room3, room4]
-    d._map_height = 5
-    d._map_width = 5
+    d._map_height = 4
+    d._map_width = 4
 
     return d
 
