@@ -1,0 +1,309 @@
+(tcss-501) sean@sean-desktop:~/Documents/dungon-adventrue$ /home/sean/anaconda3/envs/tcss-501/bin/python /home/sean/Documents/dungon-adventrue/main.py
+
+--------------------------------------------------------------------------------
+Welcome to the Dungeon of Perpetual Code Bugs. Your mission is to end
+the cycle of endless bugs by finding the four pillars of object oriented
+programming. The four pillars, "Abstraction", "Encapsulation", "Inheritance",
+and "Polymorphism", are scattered throughout the dungeon.
+
+Finding all four objectives will be no easy feat. The maze is full of doors
+that lead no where and rooms with hidden pits that can fall into. While there
+are dangers in the maze, there also tools in the maze that can help you.
+Health potions will repair damage done by pits and vision potions can help you
+navigate the maze!
+
+HOW TO PLAY
+
+With each turn you will have the option to 1) Explore the maze,
+2) Use a health potion, 3) Use a vision potion or 4) Check your status.
+
+If you choose to explore the maze you will be asked which direction
+(North, East, South, or West) you want to explore. If you find a new room,
+any objects in the room will automatically be picked up. Likewise if you come
+across a pit, you will fall in, destined to forever be trapped in a maze
+of incomprehensible classes, and methods, and constructors (oh my!).
+
+If you choose to use a health potion your health will increase by the
+value of the potion and the potion will be removed from your inventory.
+If you choose to use a vision potion you will be able to see part of the
+dungeon around you.
+
+To win the game you need to find all four pillars and make it to the dungeon's
+exit with your health intact! If you run out of health or exit before finding
+all four pillars you'll be stuck debugging poorly documented issues until the
+end of time.
+--------------------------------------------------------------------------------
+
+
+Are you brave enough to take on this task? If so please enter your name!
+(Please type your name): Sean
+
+        The Maze is deep and twisting. There are 6 rooms to explore and survive.
+        Hidden in the maze, you can find:
+
+        entrance: 1
+        game_objective: 4
+        health potion: 1
+        exit: 1.
+
+
+As you start your exploration your status is:
+
+        Sean has 75 health points.
+        Sean has the following items in inventory:
+        0 health potion with value(s): []
+        0 vision potion with value(s): []
+        0 pillar with value(s): []
+
+
+
+
+* You are starting in a room at (3, 4)*
+*-*
+|E|
+*-*
+
+        You found Encapsulation in the Room! It has been added to your inventory.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 1
+
+The door to the North is blocked.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 2
+
+The door to the East is blocked.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 3
+
+* You have entered a new room located @ (3, 3) *
+*-*
+|I|
+*-*
+
+        You found Inheritance in the Room! It has been added to your inventory.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 2
+
+The door to the East is blocked.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 3
+
+The door to the South is blocked.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 4
+
+* You have entered a new room located @ (1, 5) *
+*-*
+|A|
+*-*
+
+        You found Abstraction in the Room! It has been added to your inventory.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  4
+
+        Sean has 75 health points.
+        Sean has the following items in inventory:
+        0 health potion with value(s): []
+        0 vision potion with value(s): []
+        3 pillar with value(s): ['Encapsulation', 'Inheritance', 'Abstraction']
+
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 2
+
+* You have entered a new room located @ (3, 3) *
+*-*
+|M|
+*-*
+
+You found a Health Potion worth 8 health points in the Room. It has been added to your inventory.
+
+        You found Polymorphism in the Room! It has been added to your inventory.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 2
+
+The door to the East is blocked.
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  1
+
+Which direction would you like to move?
+    1. North
+    2. East
+    3. South
+    4. West
+(Please enter a number from the menu to pick a direction): 3
+
+* You have entered a new room located @ (5, 1) *
+*-*
+|O|
+*-*
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  5. Exit the Maze4
+
+        Sean has 75 health points.
+        Sean has the following items in inventory:
+        1 health potion with value(s): [8]
+        0 vision potion with value(s): []
+        4 pillar with value(s): ['Encapsulation', 'Inheritance', 'Abstraction', 'Polymorphism']
+
+
+
+*******************************************************************************
+What would you like to do now, Sean?
+    1. Explore the Dungeon.
+    2. Use A Health Potion.
+    3. Use A Vision Potion.
+    4. Check My Status.
+(Please enter a number from the menu above):  5. Exit the Maze5
+You Win!
+You've ended cycle of endless bugs by finding the four pillars of object oriented programming.
+
+
+
+               *-*
+               |O|
+               *-*
+
+
+
+         *-*
+         | |
+         *-*
+         *-*
+         | |
+         *-*
+   *-*
+   | |
+   *-*
