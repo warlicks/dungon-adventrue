@@ -5,6 +5,8 @@ from .dungeon import Dungeon
 
 
 class DungeonAdventure:
+    """Builds Dungeon Adventure which takes in the dungeon, adventurer, and room
+     objects and provides users options to interact with them."""
     def __init__(self, **kwargs) -> None:
         self.dungeon = Dungeon(**kwargs)
         self.adventurer = Adventurer(None)
@@ -260,6 +262,8 @@ class DungeonAdventure:
         return combined_string
 
     def health_potion(self):
+        """Manages adventurers health potion within their inventory.
+        They can use it and if they do it is removed from inventory."""
         if not self.adventurer.inventory["health potion"]:
             print("You don't have any health potion to use")
         else:
@@ -339,7 +343,7 @@ class DungeonAdventure:
         )
 
     def _welcome_message(self):
-
+        """Internal method that prints the message at the start of the game."""
         msg = textwrap.dedent(
             """
         --------------------------------------------------------------------------------
