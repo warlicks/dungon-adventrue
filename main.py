@@ -18,7 +18,6 @@ def main():
             new_room = d.move_rooms()
             if new_room:
                 d.check_room_content()
-
         elif action == 2:
             d.health_potion()
         elif action == 3:
@@ -43,10 +42,6 @@ def main():
 
         elif action == 5:
             d.maze_exit_outcome()
-
-        elif action == 10:
-            """See the whole dungeon map."""
-            d.room_vision(vision_potion=False)
 
         elif action == 10:
             """See the whole dungeon map."""
