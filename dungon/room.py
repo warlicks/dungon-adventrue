@@ -116,19 +116,19 @@ class Room:
             str: A string representing what is in the room.
         """
         if len(self.content.keys()) == 0:
-            middle = "| |\n"
+            middle = "| |" + "\n"
         elif "entrance" in self.content.keys():
-            middle = "|i|\n"
+            middle = "|i|" + "\n"
         elif "exit" in self.content.keys():
-            middle = "|O|\n"
+            middle = "|O|" + "\n"
         elif len(self.content.keys()) > 1:
-            middle = "|M|\n"
+            middle = "|M|" + "\n"
         elif "pit" in self.content.keys():
-            middle = "|X|\n"
+            middle = "|X|" + "\n"
         elif "health potion" in self.content.keys():
-            middle = "|H|\n"
+            middle = "|H|" + "\n"
         elif "vision potion" in self.content.keys():
-            middle = "|V|\n"
+            middle = "|V|" + "\n"
         elif "game_objective" in self.content.keys():
             middle = f"|{self.content['game_objective'][0]}|"
 

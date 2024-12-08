@@ -117,16 +117,14 @@ class DungeonAdventure:
         which is used to allow user to see eight rooms surrounding current room and current room.
         location in maze may cause less than num_rm_view (defaults to 8) to be displayed."""
 
-        # note: we need to know what the current room is, so I imported dungeon_adventure from dungon
-        # dungeon_adventure.current_room <-- note, we don't need the actual object can just use coordinates?
-
-        # from dungon.room import Room
-        # Room._room_content_string()
         view_around = round(num_rm_view/2)
 
         minx, miny = self.current_room.x - view_around, self.current_room.y - view_around
         maxx, maxy = self.current_room.x + view_around, self.current_room.y + view_around
+        minx = max(minx, 0)  #cutoff at 0
+        miny = max(miny, 0)  # cutoff at 0
 
+        # delete after. helps for troubleshooting
         print(f"The view in the grid between: bottom left ({minx}, {miny}), \n "
               f"bottom right ({minx}, {maxy}), \n"
               f"top left ({maxx}, {miny}), \n"
@@ -136,7 +134,33 @@ class DungeonAdventure:
         for room in self.dungeon.rooms:
             if minx <= room.x <= maxx and miny <= room.y <= maxy:
                 print_rooms.append(room)
-                print(f"adding {room} to print out list")
+                # print(f"adding {room} to print out list")
 
-        print(f"create visual for {print_rooms}")
+        # delete after. helps for troubleshooting
+        print(f"create visual for following room locations:")
+        for room in print_rooms:
+            print(f"({room.x}, {room.y}) to see \n{room.__str__()}")
+        ## TO DO will still need to print the tunnels after
+
+        # print one row at a time. all together will create grid.
+        for print_row in range(miny, maxy + 1): #reverse because grid has high y values above
+            # each x-coordinate value of 1 (width) gets 3 spaces.
+            # each row in dungeon has lines because of stars above and below
+            row_str1 = "   " * (maxx-minx+1)
+            row_str2 = "   " * (maxx-minx+1)
+            row_str3 = "   " * (maxx-minx+1)
+            for room in print_rooms: #check all the rooms to print
+                if room.y == print_row: #if they are in the row
+                    rm_str = room.__str__().replace("\n", "") #remove \n. makes count hard and changes spacing.
+                    row_str1 = f'{row_str1[:(room.x*3)]}{rm_str[0:3]}{row_str1[(room.x*3+3) + 1:]}'
+                    row_str2 = f'{row_str2[:(room.x*3)]}{rm_str[3:6]}{row_str2[(room.x*3+3) + 1:]}'
+                    row_str3 = f'{row_str3[:(room.x*3)]}{rm_str[6:9]}{row_str3[(room.x*3+3) + 1:]}'
+            print(row_str1)
+            print(row_str2)
+            print(row_str3)
+        #     full_print.append(row_str, "")
+        #
+        # print("printing full")
+        # for dict in full_print:
+        #     print(dict.items())
 
