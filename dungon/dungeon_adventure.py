@@ -158,16 +158,17 @@ class DungeonAdventure:
         HOW TO PLAY
 
         With each turn you will have the option to 1) Explore the maze,
-        2) Use a health potion, 3) Use a vision potion or 4) Checking your status.
+        2) Use a health potion, 3) Use a vision potion or 4) Check your status.
 
-        If chose to explore the maze you will be asked which direction
+        If you choose to explore the maze you will be asked which direction
         (North, East, South, or West) you want to explore. If you find a new room,
-        any objects in the room will automatically be picked up. Like wise you will
-        not have to climb out of any pits you fall into.
+        any objects in the room will automatically be picked up. Likewise if you come
+        across a pit, you will fall in, destined to forever be trapped in a maze
+        of incomprehensible classes, and methods, and constructors (oh my!).
 
-        If you chose to use a health potion you health will be increased by the
-        value of the potion and the used potion will be removed from your inventory.
-        If you chose to use a vision potion you will be able to see part of the
+        If you choose to use a health potion your health will increase by the
+        value of the potion and the potion will be removed from your inventory.
+        If you choose to use a vision potion you will be able to see part of the
         dungeon around you.
 
         To win the game you need to find all four pillars and make it to the dungeon's
