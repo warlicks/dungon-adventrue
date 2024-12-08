@@ -263,18 +263,27 @@ class DungeonAdventure:
             self.continue_game = False
 
     def _winning_message(self):
+        """Internal method prints message when you win the game."""
         print("You Win!")
+        print(
+            "You've ended cycle of endless bugs by finding the four pillars of object oriented programming."
+        )
 
     def _lose_maze_exit(self):
+        """Internal method generate message if you lose the game b/c of exiting the maze early."""
         missing = [
             x
             for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
             if x not in self.adventurer.inventory["pillar"]
         ]
-        print("You left the maze without finding")
+        print("You left the maze without finding\n")
         print("\n".join(missing))
+        print(
+            "\nYou'll be stuck debugging poorly documented issues until the end of time"
+        )
 
     def _lose_no_health(self):
+        """Internal method generates message if you lose the game because of no health."""
         print(
             "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!"
         )
