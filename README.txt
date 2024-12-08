@@ -30,3 +30,10 @@ this manually.
 ```python
 python main.py
 ```
+
+## Additional Requested info:
+Time spent on project: Sean    , Gabby ~ 2 days
+
+Work each person did: 
+- Sean: github management (branches, issues, discussion, etc), game logic, dungeon/room/dungeon adventure, health potion, research on maze generation, testing, docstrings, UML, fun and creative intro (at least according to Gabby)!
+- Gabby: github management (branches, issues, discussion, etc), testing, implemented visualizing maze, vision potion, docstrings
