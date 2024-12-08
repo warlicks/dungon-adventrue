@@ -6,7 +6,8 @@ from .dungeon import Dungeon
 
 class DungeonAdventure:
     """Builds Dungeon Adventure which takes in the dungeon, adventurer, and room
-     objects and provides users options to interact with them."""
+    objects and provides users options to interact with them."""
+
     def __init__(self, **kwargs) -> None:
         self.dungeon = Dungeon(**kwargs)
         self.adventurer = Adventurer(None)
@@ -253,10 +254,7 @@ class DungeonAdventure:
             print(row_str1)
             print(row_str2)
             print(row_str3)
-            combined_string = combined_string + \
-                              row_str1 + \
-                              row_str2 + \
-                              row_str3
+            combined_string = combined_string + row_str1 + row_str2 + row_str3
 
         print(f"create visual for {print_rooms}")
         return combined_string

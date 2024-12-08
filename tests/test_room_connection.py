@@ -90,6 +90,7 @@ def test_new_room_se():
 
 
 def test_new_room_nw():
+    """Test that the rooms are connected correctly"""
 
     room2 = Room(6, 7)  # New Room
     room1 = Room(9, 3)  # Previous room
@@ -103,6 +104,7 @@ def test_new_room_nw():
 
 
 def test_new_room_sw():
+    """Test that the rooms are connected correctly"""
     room1 = Room(9, 3)
     room2 = Room(4, 1)
 
