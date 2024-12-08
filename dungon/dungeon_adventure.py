@@ -8,6 +8,7 @@ class DungeonAdventure:
     def __init__(self, **kwargs) -> None:
         self.dungeon = Dungeon(**kwargs)
         self.adventurer = Adventurer(None)
+        self.adventurer = Adventurer(None)
         self.current_room = None
         self.continue_game = True
 
@@ -255,5 +256,124 @@ class DungeonAdventure:
                               row_str2 + \
                               row_str3
 
-
+        print(f"create visual for {print_rooms}")
         return combined_string
+
+    def health_potion(self):
+        if not self.adventurer.inventory["health potion"]:
+            print("You don't have any health potion to use")
+        else:
+            input_msg = (
+                "Which health potion would you like to use?"
+                + "\n".join(  # Need str(x) b/c join won't work w/ the int value in the list
+                    [str(x) for x in self.adventurer.inventory["health potion"]]
+                )
+                + "Please enter the value of the potion you would like to use: "
+            )
+            potion_value = input(input_msg)
+            temp = [str(x) for x in self.adventurer.inventory["health potion"]]
+            while potion_value not in temp:
+                potion_value = input(input_msg)
+
+            # Remove from inventory
+            self.adventurer.remove_from_inventory("health potion", int(potion_value))
+            self.adventurer.increase_health(int(potion_value))
+            print(f"Your health has increased to {self.adventurer.health_score}")
+
+    def _check_for_exit(self) -> bool:
+        """Internal method to check if the room has a maze exit.
+
+        This method is used to present users with an option to exit the maze
+        when they are in the room with the exit.
+
+
+        Returns:
+            bool: Indicates if an exit is present.
+        """
+        if "exit" in self.current_room.content.keys():
+            return True
+        else:
+            return False
+
+    def maze_exit_outcome(self):
+        """Checks if the player has won when they exit the maze.
+
+        To win the the player must have all the game objectives when they exit
+        the dungeon.
+        """
+        present = [
+            x in self.adventurer.inventory["pillar"]
+            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+        ]
+
+        if all(present):
+            self._winning_message()
+            self.continue_game = False
+        else:
+            self._lose_maze_exit()
+            self.continue_game = False
+
+    def _winning_message(self):
+        """Internal method prints message when you win the game."""
+        print("You Win!")
+        print(
+            "You've ended cycle of endless bugs by finding the four pillars of object oriented programming."
+        )
+
+    def _lose_maze_exit(self):
+        """Internal method generate message if you lose the game b/c of exiting the maze early."""
+        missing = [
+            x
+            for x in ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+            if x not in self.adventurer.inventory["pillar"]
+        ]
+        print(
+            "\nYou'll be stuck debugging poorly documented issues until the end of time! You left the maze without finding\n"
+        )
+        print("\n".join(missing))
+
+    def _lose_no_health(self):
+        """Internal method generates message if you lose the game because of no health."""
+        print(
+            "You Died Dungeon of Perpetual Code Bugs!\n The Dungeon is a dangerous place. Play again; if you are brave enough!"
+        )
+
+    def _welcome_message(self):
+
+        msg = textwrap.dedent(
+            """
+        --------------------------------------------------------------------------------
+        Welcome to the Dungeon of Perpetual Code Bugs. Your mission is to end
+        the cycle of endless bugs by finding the four pillars of object oriented
+        programming. The four pillars, "Abstraction", "Encapsulation", "Inheritance",
+        and "Polymorphism", are scattered throughout the dungeon.
+
+        Finding all four objectives will be no easy feat. The maze is full of doors
+        that lead no where and rooms with hidden pits that can fall into. While there
+        are dangers in the maze, there also tools in the maze that can help you.
+        Health potions will repair damage done by pits and vision potions can help you
+        navigate the maze!
+
+        HOW TO PLAY
+
+        With each turn you will have the option to 1) Explore the maze,
+        2) Use a health potion, 3) Use a vision potion or 4) Check your status.
+
+        If you choose to explore the maze you will be asked which direction
+        (North, East, South, or West) you want to explore. If you find a new room,
+        any objects in the room will automatically be picked up. Likewise if you come
+        across a pit, you will fall in, destined to forever be trapped in a maze
+        of incomprehensible classes, and methods, and constructors (oh my!).
+
+        If you choose to use a health potion your health will increase by the
+        value of the potion and the potion will be removed from your inventory.
+        If you choose to use a vision potion you will be able to see part of the
+        dungeon around you.
+
+        To win the game you need to find all four pillars and make it to the dungeon's
+        exit with your health intact! If you run out of health or exit before finding
+        all four pillars you'll be stuck debugging poorly documented issues until the
+        end of time.
+        --------------------------------------------------------------------------------
+        """
+        )
