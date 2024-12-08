@@ -230,6 +230,8 @@ class DungeonAdventure:
             if minx <= room.x <= maxx and miny <= room.y <= maxy:
                 print_rooms.append(room)
 
+        combined_string = ""
+
         # print one row at a time. all together will create grid.
         for print_row in range(miny, maxy + 1):
             # each x-coordinate value of 1 (width) gets 3 spaces.
@@ -248,3 +250,10 @@ class DungeonAdventure:
             print(row_str1)
             print(row_str2)
             print(row_str3)
+            combined_string = combined_string + \
+                              row_str1 + \
+                              row_str2 + \
+                              row_str3
+
+
+        return combined_string
